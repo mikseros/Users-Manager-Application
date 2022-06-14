@@ -1,5 +1,7 @@
 package com.mikseros.usermanagerapp;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,10 @@ public class UserRepositoryTests {
 	@Test
 	public void testAddNew() {
 		User user = new User();
-		user.setEmail("alex@goe.com");
+		user.setEmail("ali@baba.com");
 		user.setPassword("hwdp123");
-		user.setFirstName("Alex");
-		user.setLastName("Goe");
+		user.setFirstName("Ali");
+		user.setLastName("Baba");
 		
 		User savedUser = userRepository.save(user);
 		
@@ -40,5 +42,17 @@ public class UserRepositoryTests {
 		for (User user : users) {
 			System.out.println(user);
 		}
+	}
+	
+	@Test
+	public void testUpdate() {
+		Integer userId = 1;
+		Optional<User> optionalUser = userRepository.findById(userId);
+		User user = optionalUser.get();
+		user.setPassword("jp321");
+		userRepository.save(user);
+		
+		User updatedUser = userRepository.findById(userId).get();
+		Assertions.assertThat(updatedUser.getPassword()).isEqualTo("jp321");
 	}
 }
