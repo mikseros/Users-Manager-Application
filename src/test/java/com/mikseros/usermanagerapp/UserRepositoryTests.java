@@ -60,9 +60,16 @@ public class UserRepositoryTests {
 	public void testGet() {
 		Integer userId = 2;
 		Optional<User> optionalUser = userRepository.findById(userId);
-		User user = optionalUser.get();
-		
 		Assertions.assertThat(optionalUser).isPresent();
 		System.out.println(optionalUser.get());
+	}
+	
+	@Test
+	public void testDelete() {
+		Integer userId = 5;
+		userRepository.deleteById(userId);
+		
+		Optional<User> optionalUser = userRepository.findById(userId);
+		Assertions.assertThat(optionalUser).isNotPresent();
 	}
 }
